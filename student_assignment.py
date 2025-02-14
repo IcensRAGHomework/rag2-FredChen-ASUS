@@ -12,4 +12,13 @@ def hw02_1(q1_pdf):
     return doc[-1]
 
 def hw02_2(q2_pdf):
-    pass
+    loader = PyPDFLoader(q2_pdf, mode="single", extraction_mode="layout")
+    splitter = CharacterTextSplitter(
+        separator=r"第\s[一二三四五六七八九十百千萬0-9\-]+\s[章條].*\n",
+        is_separator_regex=True,
+        chunk_size=0,
+        chunk_overlap=0,
+        keep_separator="start",
+    )
+    doc = loader.load_and_split(splitter)
+    return len(doc)
